@@ -1,0 +1,14 @@
+{
+    "compilerOptions": {
+      "moduleResolution": "node",
+      "target": "ES6",
+      "lib": ["DOM", "ES6", "ES2017", "ES2018"],
+      "types": ["@league-of-foundry-developers/foundry-vtt-types", "node"],
+      "allowUmdGlobalAccess": true,
+      "sourceMap" : true,
+      "strictNullChecks": true
+    },
+    "exclude": [
+      "node_modules"
+    ]
+}
