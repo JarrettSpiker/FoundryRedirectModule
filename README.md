@@ -1,5 +1,5 @@
 ![](https://img.shields.io/badge/Foundry-v0.7.9-informational)
-![Latest Release Download Count](https://img.shields.io/github/downloads/JarrettSpiker/FoundryRedirectModule/latest/module.zip)
+![Latest Release Download Count](https://img.shields.io/github/downloads/JarrettSpiker/FoundryRedirectModule/releases/latest/module.zip)
 ![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ffoundry-redirect&colorB=4aa94a)
 
 # Description
@@ -16,6 +16,7 @@ Native Foundry VTT links will still be shown if you scroll, just in case you nee
 
 # Changelog
 
+1.0.4 Updates to Github CI infrastructure. No functional changes
 1.0.0 Initial Release
 
 # License
