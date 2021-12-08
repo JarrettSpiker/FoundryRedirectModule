@@ -1,6 +1,4 @@
 ![](https://img.shields.io/badge/Foundry-v0.7.9-informational)
-![Latest Release Download Count](https://img.shields.io/github/downloads/JarrettSpiker/FoundryRedirectModule/releases/latest/module.zip)
-![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ffoundry-redirect&colorB=4aa94a)
 
 # Description
 Foundry VTT module for converting the dynamic IP addresses Foundry VTT shows as invitation links to static URLs you can distribute to your players.
