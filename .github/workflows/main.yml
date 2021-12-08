@@ -56,7 +56,6 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: './dist/module.json, ./module.zip'
         tag: latest
-        commit: main
     
     # Create a release for this specific version
     - name: Create Version Release
@@ -70,4 +69,3 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: './dist/module.json, ./module.zip'
         tag: ${{ steps.get-version.outputs.version }}
-        commit: main
