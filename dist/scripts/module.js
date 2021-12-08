@@ -261,14 +261,7 @@ Hooks.on("ready", function () {
         return;
     }
     // post server IP to the redirect server
-    refreshIpData().then(() => __awaiter(this, void 0, void 0, function* () {
-        // fetch the server address from AWS to display to the user
-        let redirectAddress = yield getRedirectAddress();
-        if (!redirectAddress) {
-            return;
-        }
-        displayInfoMessageToUser(`Redirect Address: ${redirectAddress.externalAddress}`);
-    }));
+    refreshIpData();
 });
 Hooks.on("renderInvitationLinks", (links, html) => {
     return getRedirectAddress().then(address => {
@@ -334,14 +327,6 @@ Hooks.on("renderInvitationLinks", (links, html) => {
         formHtml.appendChild(internetDiv);
         // we need to re-activate the listeners to ensure that the copy functionality works on our new links
         links.activateListeners(html);
-        // let localHtmlElement = html.find("[name=local]").get(0);
-        // if(localHtmlElement && localHtmlElement instanceof HTMLInputElement){
-        //     localHtmlElement.value = address.localAddress;
-        // }
-        // let externalHtmlElement = html.find("[name=remote]").get(0);
-        // if(externalHtmlElement && externalHtmlElement instanceof HTMLInputElement){
-        //     externalHtmlElement.value = address.externalAddress;
-        // }
     });
 });
 
