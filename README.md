@@ -7,7 +7,7 @@ The generated links will continue to work even if your IP address changes! No mo
 
 After install, Foundry Redirect will generate a URL for your world, and display it in the Invitation Links window.
 
-![](./images/FoundryRedirectScreenshot1.png)
+![invitationUI1](./images/FoundryRedirectScreenshot.png)
 
 Native Foundry VTT links will still be shown if you scroll, just in case you need them!
 

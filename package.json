@@ -1,6 +1,6 @@
 {
     "name": "foundry-redirect-module",
-    "version": "1.0.0",
+    "version": "1.0.5",
     "description": "Foundry Redirect: Better invitation links",
     "main": "index.js",
     "scripts": {
