@@ -47,7 +47,6 @@ jobs:
     - name: Update Latest Release
       id: create_latest_release
       uses: ncipollo/release-action@v1
-      if: endsWith(github.ref, 'main')
       with:
         allowUpdates: true
         name: Latest
