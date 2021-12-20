@@ -1,6 +1,6 @@
 {
     "name": "foundry-redirect-module",
-    "version": "1.0.5",
+    "version": "1.1.0",
     "description": "Foundry Redirect: Better invitation links",
     "main": "index.js",
     "scripts": {
@@ -21,7 +21,6 @@
         "webpack-cli": "^4.9.1"
     },
     "dependencies": {
-        "uuid": "8.3.2",
-        "https" : "1.0.0"
+        "uuid": "8.3.2"
     }
 }
