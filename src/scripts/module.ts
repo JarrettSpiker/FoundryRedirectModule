@@ -15,9 +15,10 @@ interface RedirectAddresses {
 }
 
 async function refreshIpData() : Promise<void> {
-    console.log("Foundry Redirect: Refreshing foundry link data");
+    debugLog("Foundry Redirect: Refreshing foundry link data");
     let invitationLinks = new InvitationLinks()
-    let invitationData = invitationLinks.getData();
+    let invitationData = await invitationLinks.getData();
+    debugLog(invitationData);
     let localAddress = invitationData.local;
     let externalAddress = invitationData.remote;
 
@@ -48,6 +49,7 @@ function getOrCreateFoundryId() : string {
         foundryId = uuid.v1();
         user?.setFlag("core", FOUNDRY_ID_FLAG, foundryId);
     }
+    debugLog("Foundry Redirect Id: " + foundryId)
     return <string>foundryId;
 }
 
@@ -56,7 +58,7 @@ async function postFoundryInfo(foundryId : string, externalAddress:string, local
     return fetch(`${SERVER_BASE_URL}?${FOUNDRY_ID_URL_PARAM}=${foundryId}&${EXTERNAL_ADDRESS_URL_PARAM}=${externalAddress}&${INTERNAL_ADDRESS_URL_PARAM}=${localAddress}`, {
         method: "POST"
     }).then(res=>{
-        console.log("Foundry redirect: Successfully updated server address on server")
+        debugLog("Foundry redirect: Successfully updated server address on server")
     }).catch(err=>{
         displayErrorMessageToUser("Failed to post server address to redirect server")
         console.error(err);
@@ -67,6 +69,7 @@ async function getRedirectAddress() : Promise<RedirectAddresses|undefined> {
     const foundryId = getOrCreateFoundryId();
     return fetch(`${SERVER_BASE_URL}?${FOUNDRY_ID_URL_PARAM}=${foundryId}`).then(async res =>{
         let responseText  = await res.text();
+        debugLog("Fetch redirect address response: " + responseText);
         let redirect : RedirectAddresses = {
             externalAddress: responseText,
             localAddress : responseText + "/local"
@@ -95,7 +98,13 @@ function getUser() : StoredDocument<User> | null {
     let g = <Game>game
     return g.user;
 }
- 
+
+function debugLog(msg:any) {
+    if( CONFIG.debug.hasOwnProperty("redirect") && CONFIG.debug["redirect"]){
+        console.log(msg);
+    }
+}
+  
 Hooks.on("ready", function() {
     let user = getUser();
     if(!user || !user.isGM){
@@ -107,8 +116,9 @@ Hooks.on("ready", function() {
     refreshIpData()
 });
 
-Hooks.on("renderInvitationLinks", (links:InvitationLinks, html:JQuery) => {
+Hooks.on("renderInvitationLinks", (links:InvitationLinks, html:JQuery) => {  
     return getRedirectAddress().then(address =>{
+        debugLog("Inserting redirect address into invitation links")
         if(!address){
             return;
         }
@@ -120,62 +130,56 @@ Hooks.on("renderInvitationLinks", (links:InvitationLinks, html:JQuery) => {
         // find then window content
         const windowContent = html.get(0);
         if(!windowContent){
+            debugLog("Could not get base window content")
             console.error("Foundry redirect: Invitation links page does not match expected layout")
             return;
         }
-        const formHtml = windowContent.lastElementChild?.lastElementChild;
-        if(!formHtml || formHtml.childElementCount != 3){
-            console.error("Foundry redirect: Invitation links page does not match expected layout")
-            return;
-        }
-        // formHtml should be a <form> containing notes about how invitation links work, and 2 inputs for the local and internet links
-        const localNetworkDiv = formHtml.children.item(1);
-        const internetDiv = formHtml.children.item(2);
-        if(!(localNetworkDiv && localNetworkDiv.classList.contains("form-group") && internetDiv && internetDiv.classList.contains("form-group"))){
-            console.error("Foundry redirect: Invitation links page does not match expected layout")
-            return;
-        };
-        
-        // create copies of the link nodes, but switch out the native IP address with the foundry redirect
-        const redirectLocal = localNetworkDiv.cloneNode(true);
-        const redirectInternet = internetDiv.cloneNode(true);
 
-        let foundLocalInput = false;
-        let foundInternetInput = false;
-        redirectLocal.childNodes.forEach(child=>{
-            if(child instanceof HTMLInputElement){
-                child.value = address.localAddress;
-                foundLocalInput = true;
+        // When the window is opened from closed, the content of the Jquery argument
+        // is the whole window
+        // If the window was reloaded, the JQuery is the Form
+        let formHtml : HTMLFormElement | undefined;
+        if(windowContent.classList.contains("window-app") && windowContent instanceof HTMLDivElement){
+            let potentialForm = windowContent.lastElementChild?.lastElementChild;
+            if(potentialForm instanceof HTMLFormElement){
+                formHtml = potentialForm;
             }
-        });
-
-        redirectInternet.childNodes.forEach(child=>{
-            if(child instanceof HTMLInputElement){
-                child.value = address.externalAddress;
-                foundInternetInput = true;
-            }
-        });
-
-        // sanity check that we found content to replace before we start changing the DOM
-        if(!(foundLocalInput && foundInternetInput)){ 
+        } else if(windowContent instanceof HTMLFormElement){
+            formHtml = windowContent;
+        }
+        if(!formHtml || formHtml.childElementCount < 3){
+            debugLog("Could not locate input form in invitation window")
+            debugLog(formHtml)
+            debugLog(windowContent.lastElementChild)
             console.error("Foundry redirect: Invitation links page does not match expected layout")
             return;
         }
 
-        formHtml.removeChild(localNetworkDiv)
-        formHtml.removeChild(internetDiv);
+        const initialNotes = formHtml.children.item(0);
+        if(!initialNotes || !(initialNotes instanceof HTMLParagraphElement)) {
+            debugLog("Initial form element was not the expected paragraph")
+            debugLog(initialNotes)
+            return;
+        }
 
-        formHtml.appendChild(redirectLocal);
-        formHtml.appendChild(redirectInternet);
+        const divToInsert = document.createElement("div")
+        divToInsert.innerHTML = `
+            <div class="form-group">
+                <label for="local"><i class="fas fa-ethernet"></i> Local Network</label>
+                <input type="text" class="invite-link" name="local" value="${address.localAddress}">
+            </div>
+            <div class="form-group">
+                <label for="remote" title=""><i class="fas fa-wifi"></i> Internet</label>
+                <input type="text" class="invite-link" name="remote" value="${address.externalAddress}">
+            </div>
+            <p class="notes">
+                The above links are generated by the Foundry Redirect module. They should remain constant if your IP address changes. To use native FoundryVTT invitation links, see below.
+            </p>
+            <hr>
+        `
 
-        // add the native links below, with a description of what the module has done
-        const redirectDescNode : HTMLParagraphElement = document.createElement("p");
-        redirectDescNode.textContent = "The above links are generated by the Foundry Redirect module. They should remain constant if your IP address changes. To use native FoundryVTT invitation links, see below."
-        redirectDescNode.classList.add("notes")
-        formHtml.appendChild(redirectDescNode);
-        formHtml.appendChild(document.createElement("hr"))
-        formHtml.appendChild(localNetworkDiv);
-        formHtml.appendChild(internetDiv)
+        formHtml.prepend(divToInsert)
+        formHtml.prepend(initialNotes)
 
         // we need to re-activate the listeners to ensure that the copy functionality works on our new links
         links.activateListeners(html);

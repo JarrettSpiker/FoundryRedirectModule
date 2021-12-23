@@ -17,7 +17,10 @@ Native Foundry VTT links will still be shown if you scroll, just in case you nee
 
 # Changelog
 
-1.1.0 Update module description w/ security considerations and download numbers.
+1.1.0
+ - Update module description w/ security considerations and download numbers. 
+ - Add support for Foundry 0.9.0
+ - Drop support for Foundry versions older than 0.8.9
 
 1.0.4 Updates to Github CI infrastructure. No functional changes
 

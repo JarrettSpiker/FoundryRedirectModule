@@ -9,7 +9,7 @@
     "author": "JarrettSpiker",
     "license": "MIT",
     "devDependencies": {
-        "@league-of-foundry-developers/foundry-vtt-types": "^0.8.8-9",
+        "@league-of-foundry-developers/foundry-vtt-types": "^0.8.9-9",
         "@types/uuid": "^8.3.3",
         "@types/jquery" : "3.5.9",
         "gulp": "4.0.2",
