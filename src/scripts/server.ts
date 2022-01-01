@@ -3,8 +3,9 @@ import { debugLog, displayErrorMessageToUser } from "./logging";
 
 
 const TEST_SERVER_BASE_URL = "https://9fq01qzza7.execute-api.us-west-2.amazonaws.com/test"
-const SERVER_BASE_URL = "https://foundryredirect.com"
-const CUSTOMIZE_SERVER_URL = `${SERVER_BASE_URL}/customize`
+export const DEFAULT_SERVER_BASE_URL = "https://foundryredirect.com"
+const SERVER_BASE_URL = TEST_SERVER_BASE_URL; //TODO change
+const CUSTOMIZE_SERVER_URL = `${SERVER_BASE_URL}/api/customize`
 const FOUNDRY_ID_URL_PARAM = "foundry_id";
 const EXTERNAL_ADDRESS_URL_PARAM = "external_address";
 const INTERNAL_ADDRESS_URL_PARAM = "internal_address";
@@ -16,11 +17,11 @@ export interface RedirectAddresses {
 }
 
 export interface CustomAddressStatus {
-    isAvialable: boolean,
+    isAvailable: boolean,
     message: string
 }
 
-export interface CustomizeAddresResponse {
+export interface CustomizeAddressResponse {
     success: boolean,
     message: string
 }
@@ -56,11 +57,11 @@ export async function getRedirectAddress() : Promise<RedirectAddresses|undefined
 
 export async function checkCustomAddress(address:string): Promise<CustomAddressStatus> {
 
-    const isAlphanumeric = address.match(/[0-9A-Za-z]+/)
+    const isAlphanumeric = address.match(/[0-9A-Za-z_\-]+/)
     if(!isAlphanumeric){
         return {
-            isAvialable :false,
-            message: "Custom address must contain only letters and numbers",
+            isAvailable :false,
+            message: "Custom address must contain only letters, numbers, hyphens, and underscores",
         }
     }
     try{
@@ -68,22 +69,24 @@ export async function checkCustomAddress(address:string): Promise<CustomAddressS
         let isAvailable = response.status === 200
         let responseBody = await response.text();
         return {
-            isAvialable: isAvailable,
+            isAvailable: isAvailable,
             message: responseBody
         }
     } catch(err){
         console.error(err);
         return {
-            isAvialable: false,
-            message: "Could not check if address is avaiable"
+            isAvailable: false,
+            message: "Could not check if address is available"
         }
     }
 }
 
-export async function customizeRedirectAddress(newAddress: string) : Promise<CustomizeAddresResponse> {
+export async function customizeRedirectAddress(newAddress: string) : Promise<CustomizeAddressResponse> {
     const foundryId = getOrCreateFoundryId();
     try {
-        let response = await fetch(`${CUSTOMIZE_SERVER_URL}?${FOUNDRY_ID_URL_PARAM}=${foundryId}&${PUBLIC_ID_URL_PARAM}=${newAddress}`)
+        let response = await fetch(`${CUSTOMIZE_SERVER_URL}?${FOUNDRY_ID_URL_PARAM}=${foundryId}&${PUBLIC_ID_URL_PARAM}=${newAddress}`,{
+            method : "POST"
+        })
         let success = response.status === 200
         let responseBody = await response.text();
         return {

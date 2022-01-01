@@ -17,6 +17,9 @@ Native Foundry VTT links will still be shown if you scroll, just in case you nee
 
 # Changelog
 
+2.0.0
+ - Allow redirect address to be customized
+
 1.1.0
  - Update module description w/ security considerations and download numbers. 
  - Add support for Foundry 9
@@ -32,4 +35,4 @@ MIT License
 
 This module works by maintaining a database of Foundry IP addresses and the links which redirect to them, on AWS. Only the developer has access to the database.
 
-However, if you are unconfortable the IP of your Foundry instance existing on a database outside of your control, the developer recommends against the use of this module.
+However, if you are uncomfortable the IP of your Foundry instance existing on a database outside of your control, the developer recommends against the use of this module.

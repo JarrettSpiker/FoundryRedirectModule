@@ -1,0 +1,42 @@
+<form id="redirect-customization-form">
+    <p class="notes">
+        Below you may customize your foundry redirect link. Once you have entered a new link name, "Test" it to see if
+        it is available, and then submit the change when you are ready.
+    </p>
+    <p class="notes">
+        Warning: Once you have successfully submitted a change, your old links will no longer work.
+    </p>
+    <hr>
+    <div class="flexrow">
+        <section class="flex0">foundryredirect.com/</section>
+        <input type="text" id="redirect-value" disabled value="....."></input>
+    </div>
+    <div class="flexrow">
+        <i class="fas fa-spinner fa-spin flex0" id="redirect-status-icon"></i>
+        <section id="redirect-status-message" class="flex2">Loading...</section>
+        <button disabled id="test-redirect-address">Test Address</button>
+    </div>
+    <hr>
+    <div class="flexrow">
+        <button id="cancel-redirect"><i class="fas fa-ban"></i>Cancel</button>
+        <button disabled id="submit-redirect"><i class="fas fa-edit"></i>Submit</button>
+    </div>
+</form>
+<style>
+    #test-redirect-address {
+        margin: 3px;
+        margin-left: 8px;
+    }
+
+    #redirect-status-icon {
+        margin: 8px;
+    }
+
+    #redirect-value {
+        margin-left: 2px;
+    }
+
+    .flexrow {
+        align-items: center;
+    }
+</style>
