@@ -8,6 +8,14 @@ export function getUser() : StoredDocument<User> | null {
     return g.user;
 }
 
+export function isGm() : boolean {
+    let user = getUser();
+    if(!user){
+        return false;
+    }
+    return user.isGM;
+}
+
 export function getOrCreateFoundryId() : string {
     let user = getUser();
     let foundryId = user?.getFlag("core", FOUNDRY_ID_FLAG);
