@@ -1,7 +1,7 @@
 import { debugLog, displayErrorMessageToUser, displayInfoMessageToUser } from "./logging";
 import { checkCustomAddress, CustomAddressStatus, customizeRedirectAddress, DEFAULT_SERVER_BASE_URL, getRedirectAddress } from "./server";
 
-export async function displayCustomizationDialogue(callback : ()=>null) {
+export async function displayCustomizationDialogue(callback : ()=>void) {
     let content = await renderTemplate("modules/foundry-redirect/templates/customizationDialogue.html", {})
     let dialogue = new Dialog({
         title: "Foundry Redirect Customization",
@@ -17,7 +17,8 @@ export async function displayCustomizationDialogue(callback : ()=>null) {
     dialogue.render(true);
 }
 
-async function submitChanges(target:GlobalEventHandlers, dialogue:Dialog){
+async function submitChanges(target:GlobalEventHandlers, event:MouseEvent, dialogue:Dialog){
+    event.preventDefault();
     let formElement = findCustomizationFormFromClickTarget(target);
     if(!formElement) {
         return;
@@ -36,11 +37,13 @@ async function submitChanges(target:GlobalEventHandlers, dialogue:Dialog){
     dialogue.close();
 }
 
-function cancel(dialogue:Dialog) {
+function cancel(dialogue:Dialog, ev: MouseEvent) {
+    ev.preventDefault();
     dialogue.close();
 }
 
-async function testAddress(this: GlobalEventHandlers){
+async function testAddress(this: GlobalEventHandlers, ev: MouseEvent){
+    ev.preventDefault();
     let formElement = findCustomizationFormFromClickTarget(this);
     if(!formElement) {
         return;
@@ -88,8 +91,8 @@ async function onRender(html: HTMLElement | JQuery<HTMLElement>, dialogue:Dialog
 
     // add listeners to the various buttons
     testButton.onclick = testAddress;
-    submitButton.onclick = () => submitChanges(submitButton!, dialogue);
-    cancelButton.onclick = () => cancel(dialogue);
+    submitButton.onclick = (ev) => submitChanges(submitButton!, ev, dialogue);
+    cancelButton.onclick = (ev) => cancel(dialogue, ev);
 
     // allow address to be edited, and test to be clicked
     hideStatusMessageSection(html, true);

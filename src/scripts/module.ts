@@ -101,7 +101,6 @@ Hooks.on("renderInvitationLinks", (links:InvitationLinks, html:JQuery) => {
             customizeRedirectLink.onclick = () => {
                 displayCustomizationDialogue(() => {
                     links.render()
-                    return null;
                 })
             }
         } else {

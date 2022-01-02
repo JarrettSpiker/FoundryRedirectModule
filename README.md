@@ -14,6 +14,17 @@ After install, Foundry Redirect will generate a URL for your world, and display 
 
 Native Foundry VTT links will still be shown if you scroll, just in case you need them!
 
+## Customizing Your Link
+
+By default, Foundry Redirect will generate a link which looks like `https://foundryredirect.com/(a random ID)`. For example `https://foundryredirect.com/abcd1234-98gh-11zz-a976-611b200d4b84` This link will remain the same as your IP address changes, but is still unwieldy and difficult to memorize.
+
+Instead of using the default random ID, you may customize it to something more unique to your world! From the Invitation Links window, click the "Customize" link to open the customization window. Then you can edit the link, "Test Address" to see if it is available, and Submit when you are happy with it
+
+![customizeUI1](./images/FoundryRedirectCustomize1.png)
+
+![customizeUI12](./images/FoundryRedirectCustomize2.png)
+
+**Warning:** After customizing your link, your previous link will no longer work.
 
 # Changelog
 
