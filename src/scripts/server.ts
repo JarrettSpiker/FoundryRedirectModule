@@ -4,7 +4,7 @@ import { debugLog, displayErrorMessageToUser } from "./logging";
 
 const TEST_SERVER_BASE_URL = "https://9fq01qzza7.execute-api.us-west-2.amazonaws.com/test"
 export const DEFAULT_SERVER_BASE_URL = "https://foundryredirect.com"
-const SERVER_BASE_URL = TEST_SERVER_BASE_URL; //TODO change
+const SERVER_BASE_URL = DEFAULT_SERVER_BASE_URL;
 const CUSTOMIZE_SERVER_URL = `${SERVER_BASE_URL}/api/customize`
 const FOUNDRY_ID_URL_PARAM = "foundry_id";
 const EXTERNAL_ADDRESS_URL_PARAM = "external_address";
