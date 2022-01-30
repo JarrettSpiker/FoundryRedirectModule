@@ -28,6 +28,9 @@ Instead of using the default random ID, you may customize it to something more u
 
 # Changelog
 
+2.0.1
+ - Foundry 9.245 support
+
 2.0.0
  - Allow redirect address to be customized
 
