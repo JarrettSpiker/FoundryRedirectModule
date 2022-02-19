@@ -3,9 +3,9 @@
     "title": "Foundry Redirect: Better invitation links",
     "description": "A module to create static invitation links which look like a regular URL, and don't need to be resent every time your IP address changes",
     "author": "JarrettSpiker",
-    "version": "2.0.1",
+    "version": "2.0.2",
     "minimumCoreVersion": "0.7.9",
-    "compatibleCoreVersion" : "9.245",
+    "compatibleCoreVersion" : "9",
     "scripts": [
       "scripts/module.js"
     ],
