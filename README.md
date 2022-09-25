@@ -28,7 +28,7 @@ Instead of using the default random ID, you may customize it to something more u
 
 # Changelog
 
-2.0.2
+2.0.3
  - Fix #14 : Update version support to Foundry v10
 
 2.0.2
