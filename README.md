@@ -31,6 +31,7 @@ Instead of using the default random ID, you may customize it to something more u
 2.0.4
  - Update support to include Foundry v11
  - #20: Simplify acquisition of form element
+ - Fix #19 : Remove deprecation warnings caused by change in manifest format for foundry v10
 
 2.0.3
  - Fix #14 : Update version support to Foundry v10

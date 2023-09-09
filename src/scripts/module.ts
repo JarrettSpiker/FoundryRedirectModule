@@ -19,7 +19,7 @@ async function refreshIpData() : Promise<void> {
         displayErrorMessageToUser("Foundry Redirect: Failed to determine external IP address from Foundry")
         return;
     }
-    
+
     // check if there is a stored foundry id. If not, generate one
     let foundryId = getOrCreateFoundryId();
 
@@ -29,7 +29,7 @@ async function refreshIpData() : Promise<void> {
     setTimeout(refreshIpData, 1000 * 60 * 60)
     return p;
 }
-  
+
 Hooks.on("ready", function() {
     if(!isGm()){
         console.log("Foundry Redirect: Current user is not the GM. Not setting up foundry redirects");
@@ -39,7 +39,7 @@ Hooks.on("ready", function() {
     refreshIpData()
 });
 
-Hooks.on("renderInvitationLinks", (links:InvitationLinks, html:JQuery) => {  
+Hooks.on("renderInvitationLinks", (links:InvitationLinks, html:JQuery) => {
     return getRedirectAddress().then(async address =>{
         debugLog("Inserting redirect address into invitation links")
         if(!address){
@@ -60,9 +60,12 @@ Hooks.on("renderInvitationLinks", (links:InvitationLinks, html:JQuery) => {
         // When the window is opened from closed, the content of the Jquery argument
         // is the whole window
         // If the window was reloaded, the JQuery is the Form
-        let formHtml : HTMLFormElement | undefined;
+        let formHtml: HTMLFormElement | undefined;
         if(windowContent.classList.contains("window-app") && windowContent instanceof HTMLDivElement){
-            formHtml = windowContent.querySelector("form");
+            let queriedForm = windowContent.querySelector("form");
+            if(queriedForm){
+                formHtml = queriedForm;
+            }
         } else if(windowContent instanceof HTMLFormElement){
             formHtml = windowContent;
         }
@@ -89,7 +92,7 @@ Hooks.on("renderInvitationLinks", (links:InvitationLinks, html:JQuery) => {
             isGm : isGm(),
         });
         divToInsert.innerHTML = htmlToInsert;
-        
+
         formHtml.prepend(divToInsert)
         formHtml.prepend(initialNotes)
 
