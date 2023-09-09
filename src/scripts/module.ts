@@ -62,10 +62,7 @@ Hooks.on("renderInvitationLinks", (links:InvitationLinks, html:JQuery) => {
         // If the window was reloaded, the JQuery is the Form
         let formHtml : HTMLFormElement | undefined;
         if(windowContent.classList.contains("window-app") && windowContent instanceof HTMLDivElement){
-            let potentialForm = windowContent.lastElementChild?.lastElementChild;
-            if(potentialForm instanceof HTMLFormElement){
-                formHtml = potentialForm;
-            }
+            formHtml = windowContent.querySelector("form");
         } else if(windowContent instanceof HTMLFormElement){
             formHtml = windowContent;
         }
