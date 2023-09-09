@@ -37,7 +37,8 @@ gulp.task('copy', async () => {
 gulp.task('build', gulp.parallel('runWebpack', 'copy'));
 
 
-// This is supposed to copy the dist folder into the modules directory for testing. Only works if you've set it up the right way
+// This is supposed to copy the dist folder into the modules directory for testing. Only works if you're relative path is exactly correct
+// TODO make this less horribly brittle
 const MODULEPATH = "../../AppData/Local/FoundryVTT/Data/modules/foundry-redirect/"
 gulp.task('foundry', () => {
   return gulp.src('dist/**').pipe(gulp.dest(MODULEPATH))

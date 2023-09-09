@@ -1,6 +1,6 @@
 {
     "name": "foundry-redirect-module",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "description": "Foundry Redirect: Better invitation links",
     "main": "index.js",
     "scripts": {
@@ -9,7 +9,7 @@
     "author": "JarrettSpiker",
     "license": "MIT",
     "devDependencies": {
-        "@league-of-foundry-developers/foundry-vtt-types": "^9.249.4",
+        "@league-of-foundry-developers/foundry-vtt-types": "^9.280.0",
         "@types/uuid": "^8.3.3",
         "@types/jquery" : "3.5.9",
         "gulp": "4.0.2",
