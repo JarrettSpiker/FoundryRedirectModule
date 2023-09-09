@@ -1,5 +1,5 @@
 ![Foundry Version](https://img.shields.io/badge/Foundry-v0.7.9-informational)
-![GitHub Releases Latest](https://img.shields.io/github/downloads/JarrettSpiker/FoundryRedirectModule/latest/total) 
+![GitHub Releases Latest](https://img.shields.io/github/downloads/JarrettSpiker/FoundryRedirectModule/latest/total)
 ![GitHub Releases](https://img.shields.io/github/downloads/JarrettSpiker/FoundryRedirectModule/total)
 ![Forge Installs](https://img.shields.io/badge/dynamic/json?label=Forge%20Installs&query=package.installs&suffix=%25&url=https%3A%2F%2Fforge-vtt.com%2Fapi%2Fbazaar%2Fpackage%2Ffoundry-redirect&colorB=4aa94a)
 
@@ -28,6 +28,10 @@ Instead of using the default random ID, you may customize it to something more u
 
 # Changelog
 
+2.0.4
+ - Update support to include Foundry v11
+ - #20: Simplify acquisition of form element
+
 2.0.3
  - Fix #14 : Update version support to Foundry v10
 
@@ -41,7 +45,7 @@ Instead of using the default random ID, you may customize it to something more u
  - Allow redirect address to be customized
 
 1.1.0
- - Update module description w/ security considerations and download numbers. 
+ - Update module description w/ security considerations and download numbers.
  - Add support for Foundry 9
 
 1.0.4 Updates to Github CI infrastructure. No functional changes
